@@ -19,3 +19,8 @@ build/
 # Logs
 *.log
 
+# Release packages
+KeepMyHeadphones-*.tar.gz
+KeepMyHeadphones-*.tar.gz.sha256
+KeepMyHeadphones-*/
+HeadphoneIssueService-*.tar.gz

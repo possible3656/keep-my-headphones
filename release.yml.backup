@@ -1,0 +1,90 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: Build Release Binary
+      run: |
+        swift build -c release
+        
+    - name: Create Release Package
+      run: |
+        mkdir -p release-package
+        cp .build/release/KeepMyHeadphones release-package/
+        cp com.whybex.keepmyheadphones.plist release-package/
+        cp install.sh release-package/
+        cp uninstall.sh release-package/
+        cp README.md release-package/
+        cp QUICK_START.md release-package/
+        chmod +x release-package/KeepMyHeadphones
+        chmod +x release-package/install.sh
+        chmod +x release-package/uninstall.sh
+        
+    - name: Create tarball
+      run: |
+        cd release-package
+        tar -czf ../KeepMyHeadphones-macos.tar.gz *
+        cd ..
+        
+    - name: Generate checksums
+      run: |
+        shasum -a 256 KeepMyHeadphones-macos.tar.gz > checksums.txt
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          KeepMyHeadphones-macos.tar.gz
+          checksums.txt
+        body: |
+          ## Keep My Headphones - macOS Release
+          
+          ### Installation (No Xcode Required!)
+          
+          1. Download `KeepMyHeadphones-macos.tar.gz`
+          2. Extract the archive
+          3. Run the installer:
+             ```bash
+             cd KeepMyHeadphones-macos
+             sudo ./install.sh
+             ```
+          
+          ### What's Included
+          
+          - Pre-built binary (no compilation needed)
+          - Installation script
+          - Uninstallation script
+          - Documentation
+          
+          ### System Requirements
+          
+          - macOS 12.0 (Monterey) or later
+          - No Xcode or developer tools required!
+          
+          ### Verify Download
+          
+          Check the SHA-256 checksum:
+          ```bash
+          shasum -a 256 KeepMyHeadphones-macos.tar.gz
+          ```
+          Compare with `checksums.txt`
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

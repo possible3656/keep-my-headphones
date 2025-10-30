@@ -9,23 +9,37 @@ Automatically fixes the macOS issue where external headphones disappear from aud
 - Before sleep: Switches from external headphones to built-in speakers
 - After wake: Automatically switches back to your headphones
 
-## Installation (3 Steps)
+## Installation
 
-### 1. Build
+### Option A: Pre-built Binary (Easiest - No Xcode!)
 
-```bash
-./build.sh
-```
+1. **Download** from [Releases](https://github.com/whybex/keep-my-headphones/releases)
+2. **Extract:**
+   ```bash
+   tar -xzf KeepMyHeadphones-*-macos.tar.gz
+   cd KeepMyHeadphones-*
+   ```
+3. **Install:**
+   ```bash
+   sudo ./install.sh
+   ```
+4. **Done!** Service is running.
 
-### 2. Install
+### Option B: Build from Source
 
-```bash
-sudo ./install.sh
-```
+1. **Build:**
 
-### 3. Done!
+   ```bash
+   ./build.sh
+   ```
 
-The service is now running and will start automatically on boot.
+2. **Install:**
+
+   ```bash
+   sudo ./install.sh
+   ```
+
+3. **Done!** Service is running.
 
 ## Verify It's Working
 

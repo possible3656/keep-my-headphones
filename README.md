@@ -31,27 +31,52 @@ This service automatically:
 
 ## Installation
 
-### 1. Install Xcode Command Line Tools (if not already installed)
+### Option 1: Download Pre-built Binary (Recommended - No Xcode Required!)
+
+**This is the easiest method and doesn't require any developer tools.**
+
+1. **Download the latest release:**
+
+   - Go to the [Releases page](https://github.com/whybex/keep-my-headphones/releases)
+   - Download `KeepMyHeadphones-macos.tar.gz`
+
+2. **Extract and install:**
+
+   ```bash
+   # Extract the archive
+   tar -xzf KeepMyHeadphones-*-macos.tar.gz
+   cd KeepMyHeadphones-*
+
+   # Install (requires sudo)
+   sudo ./install.sh
+   ```
+
+3. **Done!** The service is now running.
+
+### Option 2: Build from Source
+
+**Only needed if you want to modify the code or build it yourself.**
+
+#### 1. Install Xcode Command Line Tools (if not already installed)
 
 ```bash
 xcode-select --install
 ```
 
-### 2. Clone or Download this Repository
+#### 2. Clone or Download this Repository
 
 ```bash
-cd ~/mac-apps
-git clone <repository-url> headphone-issue-service
-cd headphone-issue-service
+git clone https://github.com/whybex/keep-my-headphones.git
+cd keep-my-headphones
 ```
 
-### 3. Build the Service
+#### 3. Build the Service
 
 ```bash
 ./build.sh
 ```
 
-### 4. Install the Service
+#### 4. Install the Service
 
 ```bash
 sudo ./install.sh
