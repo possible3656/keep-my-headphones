@@ -1,0 +1,21 @@
+# Swift
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+DerivedData/
+.swiftpm/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+build/
+*.app
+*.dSYM.zip
+*.dSYM
+
+# Logs
+*.log
+
