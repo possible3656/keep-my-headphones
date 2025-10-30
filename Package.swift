@@ -2,19 +2,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "HeadphoneIssueService",
+    name: "KeepMyHeadphones",
     platforms: [
         .macOS(.v12)
     ],
     products: [
         .executable(
-            name: "HeadphoneIssueService",
-            targets: ["HeadphoneIssueService"]
+            name: "KeepMyHeadphones",
+            targets: ["KeepMyHeadphones"]
         )
     ],
     targets: [
         .executableTarget(
-            name: "HeadphoneIssueService",
+            name: "KeepMyHeadphones",
             dependencies: [],
             path: "Sources"
         )

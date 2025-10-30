@@ -22,7 +22,7 @@ class AudioDeviceManager {
     init() {
         // Store state in user's Library/Application Support
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let serviceDir = appSupport.appendingPathComponent("HeadphoneIssueService")
+        let serviceDir = appSupport.appendingPathComponent("KeepMyHeadphones")
         try? FileManager.default.createDirectory(at: serviceDir, withIntermediateDirectories: true)
         stateFilePath = serviceDir.appendingPathComponent("device_state.json").path
     }

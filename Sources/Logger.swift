@@ -6,13 +6,13 @@ class Logger {
     
     private let logFilePath: String
     private let dateFormatter: DateFormatter
-    private let queue = DispatchQueue(label: "com.headphoneissueservice.logger")
-    
+    private let queue = DispatchQueue(label: "com.whybex.keepmyheadphones.logger")
+
     private init() {
         // Store logs in user's Library/Logs
         let logsDir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
             .appendingPathComponent("Logs")
-            .appendingPathComponent("HeadphoneIssueService")
+            .appendingPathComponent("KeepMyHeadphones")
         
         try? FileManager.default.createDirectory(at: logsDir, withIntermediateDirectories: true)
         logFilePath = logsDir.appendingPathComponent("service.log").path

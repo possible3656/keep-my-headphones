@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Build script for HeadphoneIssueService
+# Build script for KeepMyHeadphones
 
 set -e
 
-echo "=== Building HeadphoneIssueService ==="
+echo "=== Building KeepMyHeadphones ==="
 
 # Check if Swift is installed
 if ! command -v swift &> /dev/null; then
@@ -21,9 +21,9 @@ echo "Building in release mode..."
 swift build -c release
 
 # Check if build was successful
-if [ -f ".build/release/HeadphoneIssueService" ]; then
+if [ -f ".build/release/KeepMyHeadphones" ]; then
     echo "✓ Build successful!"
-    echo "Binary location: .build/release/HeadphoneIssueService"
+    echo "Binary location: .build/release/KeepMyHeadphones"
 else
     echo "✗ Build failed!"
     exit 1

@@ -1,4 +1,4 @@
-# Headphone Issue Service for macOS
+# Keep My Headphones
 
 A lightweight macOS background service that solves the common audio device switching issue where external headphones disappear from the available audio devices list after the MacBook wakes from sleep.
 
@@ -9,6 +9,7 @@ On macOS, when an external headphone is selected as the output audio device and 
 ## Solution
 
 This service automatically:
+
 1. **Before Sleep**: Detects if an external headphone is currently selected, saves its information, and switches to built-in speakers
 2. **After Wake**: Checks if the previously used external headphone is available and automatically switches back to it
 
@@ -56,7 +57,7 @@ cd headphone-issue-service
 sudo ./install.sh
 ```
 
-The service will be installed to `/usr/local/bin/HeadphoneIssueService` and configured to start automatically on boot.
+The service will be installed to `/usr/local/bin/KeepMyHeadphones` and configured to start automatically on boot.
 
 ## Usage
 
@@ -65,12 +66,13 @@ Once installed, the service runs automatically in the background. No user intera
 ### Checking Service Status
 
 ```bash
-launchctl list | grep headphoneissueservice
+launchctl list | grep keepmyheadphones
 ```
 
 If the service is running, you'll see output like:
+
 ```
-12345   0   com.headphoneissueservice
+12345   0   com.whybex.keepmyheadphones
 ```
 
 ### Viewing Logs
@@ -79,28 +81,31 @@ The service maintains detailed logs for troubleshooting:
 
 ```bash
 # View real-time logs
-tail -f ~/Library/Logs/HeadphoneIssueService/service.log
+tail -f ~/Library/Logs/KeepMyHeadphones/service.log
 
 # View all logs
-cat ~/Library/Logs/HeadphoneIssueService/service.log
+cat ~/Library/Logs/KeepMyHeadphones/service.log
 ```
 
 ### Manual Control
 
 **Stop the service:**
+
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.headphoneissueservice.plist
+launchctl unload ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
 ```
 
 **Start the service:**
+
 ```bash
-launchctl load ~/Library/LaunchAgents/com.headphoneissueservice.plist
+launchctl load ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
 ```
 
 **Restart the service:**
+
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.headphoneissueservice.plist
-launchctl load ~/Library/LaunchAgents/com.headphoneissueservice.plist
+launchctl unload ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
+launchctl load ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
 ```
 
 ## Uninstallation
@@ -120,6 +125,7 @@ You'll be prompted whether to remove logs and saved data.
 The service consists of four main components:
 
 1. **AudioDeviceManager**: Handles all audio device operations using CoreAudio APIs
+
    - Detects current output device
    - Lists all available audio devices
    - Switches between devices
@@ -127,11 +133,13 @@ The service consists of four main components:
    - Persists device state
 
 2. **PowerEventMonitor**: Monitors system power events using IOKit
+
    - Detects when system is going to sleep
    - Detects when system wakes up
    - Provides callbacks for power events
 
 3. **HeadphoneService**: Main coordinator that orchestrates the solution
+
    - Responds to sleep events by saving external headphone info and switching to speakers
    - Responds to wake events by restoring the previous external headphone
 
@@ -140,6 +148,7 @@ The service consists of four main components:
 ### Workflow
 
 **Before Sleep:**
+
 ```
 1. System sends "will sleep" notification
 2. Service checks current output device
@@ -149,6 +158,7 @@ The service consists of four main components:
 ```
 
 **After Wake:**
+
 ```
 1. System sends "did wake" notification
 2. Service waits 2 seconds for audio system to stabilize
@@ -171,29 +181,33 @@ The service consists of four main components:
 ### Service Not Starting
 
 1. Check if the service is loaded:
+
    ```bash
-   launchctl list | grep headphoneissueservice
+   launchctl list | grep keepmyheadphones
    ```
 
 2. Check for errors in system logs:
+
    ```bash
-   tail -f /tmp/headphone-issue-service.err.log
+   tail -f /tmp/keep-my-headphones.err.log
    ```
 
 3. Try reloading the service:
    ```bash
-   launchctl unload ~/Library/LaunchAgents/com.headphoneissueservice.plist
-   launchctl load ~/Library/LaunchAgents/com.headphoneissueservice.plist
+   launchctl unload ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
+   launchctl load ~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist
    ```
 
 ### Audio Not Switching
 
 1. Check the service logs:
+
    ```bash
-   tail -f ~/Library/Logs/HeadphoneIssueService/service.log
+   tail -f ~/Library/Logs/KeepMyHeadphones/service.log
    ```
 
 2. Verify your headphones are detected as external devices:
+
    - The service only switches external devices
    - Built-in audio ports may not be detected as external
 
@@ -204,6 +218,7 @@ The service consists of four main components:
 ### Permissions Issues
 
 The service requires access to:
+
 - Audio device management (CoreAudio)
 - Power event notifications (IOKit)
 - File system (for logs and state)
@@ -221,10 +236,10 @@ These are standard system APIs and don't require special permissions.
 
 ### File Locations
 
-- **Binary**: `/usr/local/bin/HeadphoneIssueService`
-- **LaunchAgent**: `~/Library/LaunchAgents/com.headphoneissueservice.plist`
-- **Logs**: `~/Library/Logs/HeadphoneIssueService/service.log`
-- **State**: `~/Library/Application Support/HeadphoneIssueService/device_state.json`
+- **Binary**: `/usr/local/bin/KeepMyHeadphones`
+- **LaunchAgent**: `~/Library/LaunchAgents/com.whybex.keepmyheadphones.plist`
+- **Logs**: `~/Library/Logs/KeepMyHeadphones/service.log`
+- **State**: `~/Library/Application Support/KeepMyHeadphones/device_state.json`
 
 ### Performance
 
@@ -247,6 +262,7 @@ This service was created to solve a common macOS issue that affects many users w
 ## Support
 
 If you encounter issues:
+
 1. Check the troubleshooting section above
 2. Review the logs for error messages
 3. Open an issue with detailed information about your setup and the problem
@@ -254,4 +270,3 @@ If you encounter issues:
 ---
 
 **Note**: This service is designed for MacBook users experiencing the external headphone disappearing issue after sleep/wake cycles. It may not be necessary for all users or all audio devices.
-
